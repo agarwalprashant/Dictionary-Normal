@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app='dictionary'>
+
+  <head>
+    <script data-require='angular.js@1.3.0' data-semver='1.3.0' src='https://code.angularjs.org/1.3.0/angular.js'></script>
+    <script src='script.js'></script>
+
+  </head>
+
+  <body ng-controller='MainController'>
+    <h1>{{title}}</h1>
+    
+    <form ng-submit='search(searchterm)'>
+    <input type=search' ng-model="searchterm" placeholder="Type the word">
+    <input type="submit" value="search">
+    </form>
+    <h1>Meaning:{{wordDetailsObject.tuc[0].meanings[1].text}}</h1>
+  </body>
+
+</html>
