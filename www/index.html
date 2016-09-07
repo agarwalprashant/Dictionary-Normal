@@ -2,19 +2,68 @@
 <html ng-app='dictionary'>
 
   <head>
-    <script data-require='angular.js@1.3.0' data-semver='1.3.0' src='https://code.angularjs.org/1.3.0/angular.js'></script>
-    <script src='script.js'></script>
+      <title>Awesome Dictionary</title>
+        <link href="css/animate.css" rel="stylesheet">
+        
+        <link href="css/style.css" rel="stylesheet">
+
+          <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script> 
+
+        <script src='js/script.js'></script>
+
+      
+
+
 
   </head>
 
   <body ng-controller='MainController'>
     <h1>{{title}}</h1>
+    {{error}}
+
+
+
+
+
+ <form class="animated bounceInDown" align="center">
+    <input  ng-model="searchterm" placeholder="search for meaning"  type="text">
+    <input type="submit" value="Search for english and hindi" ng-click='search(searchterm)'>
+    <input type="submit" value="Search for german translation" ng-click="searchDE(searchterm)">
+     <input type="submit" value="Search for Anglo-Norman translation" ng-click="searchXNO(searchterm)">
+</form>
+<br>
     
-    <form ng-submit='search(searchterm)'>
-    <input type=search' ng-model="searchterm" placeholder="Type the word">
-    <input type="submit" value="search">
-    </form>
-    <h1>Meaning:{{wordDetailsObject.tuc[0].meanings[1].text}}</h1>
+
+
+   
+
+    <h1 class="animated bounceInLeft">English meanings</h1>
+    <div class="animated bounceInLeft" ng-repeat="meaning in array">
+      <h3>{{meaning.text}}</h3>
+    </div>
+
+      <h1 class ="animated bounceInRight">Hindi Meaning</h1>
+    <div class="animated bounceInRight" ng-repeat="meaning in inHindi">
+      <h3>{{meaning.phrase.text}}</h3>
+    </div>
+
+     <h1 class ="animated bounceInDown">german translation</h1>
+     <div ng-show="inGerman" class ="animated bounceInRight"> No of transliteration found:{{inGerman.length}}</div>
+    <div class="animated bounceInDown" ng-repeat="meaning in inGerman">
+      <h3>{{meaning.phrase.text}}</h3>
+    </div>
+
+      <h1 class ="animated bounceInDown">Anglo-Norman translation</h1>
+     <div ng-show="inAngloNorman" class ="animated bounceInRight"> No of transliteration found:{{inAngloNorman.length}}</div>
+    <div class="animated bounceInDown" ng-repeat="meaning in inAngloNorman">
+      <h3>{{meaning.text}}</h3>
+    </div>
+
+  
+
+
   </body>
 
 </html>
