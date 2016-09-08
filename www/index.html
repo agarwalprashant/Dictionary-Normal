@@ -2,68 +2,59 @@
 <html ng-app='dictionary'>
 
   <head>
-      <title>Awesome Dictionary</title>
+      <title>Awesome Dictionary- The multilingual online dictionary</title>
         <link href="css/animate.css" rel="stylesheet">
-        
         <link href="css/style.css" rel="stylesheet">
 
-          <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script> 
-
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
         <script src='js/script.js'></script>
-
-      
-
-
-
+        <script src='js/services.js'></script>
   </head>
 
   <body ng-controller='MainController'>
     <h1>{{title}}</h1>
     {{error}}
+<h3>We provide free dictionaries for almost every existing language and translation memory</h3>
 
-
-
+  <ul>
+    <li>Almost every live language.</li>
+    <li>Huge dictionary database.</li>
+    <li>Millions of examples</li>
+    <li>Unique phrases and expressions.</li>
+  </ul>
 
 
  <form class="animated bounceInDown" align="center">
-    <input  ng-model="searchterm" placeholder="search for meaning"  type="text">
-    <input type="submit" value="Search for english and hindi" ng-click='search(searchterm)'>
-    <input type="submit" value="Search for german translation" ng-click="searchDE(searchterm)">
-     <input type="submit" value="Search for Anglo-Norman translation" ng-click="searchXNO(searchterm)">
+    <input type="text"  ng-model="searchterm" placeholder="search for {{src}} - {{dest}} Dictionary" style="width:300px;" >
+
+    <input type="submit" ng-click="search(searchterm,src,dest)" value="search">
 </form>
 <br>
     
+<div align="center" class="animated bounceInDown">
+<select ng-model="src">
+  <option value="eng">English</option>
+  <option value="hin">Hindi</option>
+  <option value="de">German</option>
+  <option value="xno">Anglo-Norman</option>
+  <option value="pol">Polish</option>
+</select>
 
 
-   
+<select ng-model="dest">
+  <option value="eng">English</option>
+  <option value="hin">Hindi</option>
+  <option value="de">German</option>
+  <option value="xno">Anglo-Norman</option>
+  <option value="pol">Polish</option>
+</select>
+</div>
 
-    <h1 class="animated bounceInLeft">English meanings</h1>
-    <div class="animated bounceInLeft" ng-repeat="meaning in array">
-      <h3>{{meaning.text}}</h3>
-    </div>
-
-      <h1 class ="animated bounceInRight">Hindi Meaning</h1>
-    <div class="animated bounceInRight" ng-repeat="meaning in inHindi">
+    <h1 class ="animated bounceInLeft" ng-show="Data">translation</h1>
+     <div ng-show="Data" class ="animated bounceInLeft"> No of transliteration found:{{Data.length}}</div>
+    <div class="animated bounceInLeft" ng-repeat="meaning in Data">
       <h3>{{meaning.phrase.text}}</h3>
     </div>
-
-     <h1 class ="animated bounceInDown">german translation</h1>
-     <div ng-show="inGerman" class ="animated bounceInRight"> No of transliteration found:{{inGerman.length}}</div>
-    <div class="animated bounceInDown" ng-repeat="meaning in inGerman">
-      <h3>{{meaning.phrase.text}}</h3>
-    </div>
-
-      <h1 class ="animated bounceInDown">Anglo-Norman translation</h1>
-     <div ng-show="inAngloNorman" class ="animated bounceInRight"> No of transliteration found:{{inAngloNorman.length}}</div>
-    <div class="animated bounceInDown" ng-repeat="meaning in inAngloNorman">
-      <h3>{{meaning.text}}</h3>
-    </div>
-
-  
-
 
   </body>
-
 </html>

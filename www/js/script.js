@@ -1,88 +1,35 @@
 
 
-  var dictionary = angular.module("dictionary",[]);
-
-function translate($http){
-    var obj={};
-
-    obj.makeHttpRequest = function(searchterm,source,dest){
-         return $http.get("https://glosbe.com/gapi/translate?from="+source+"&dest="+dest+"&format=json&phrase=" + searchterm)
-                      .then(function(response){
-                        return response.data;
-                      })
-    }
-      return obj;
-}
-
-
-
+var dictionary = angular.module("dictionary",[]);
+dictionary.controller("MainController",["$scope","$http","$log","translate",MainController])
 
 
 function MainController($scope,$http,$log,translate){
-
-    function onHindiComplete(response){
-        console.dir(response.data)
-        $scope.inHindi = response.data.tuc;
-      }
-
+//functions begin
     function onError(error){
           $scope.error = "could not fetch the results";
         }
 
-
-    function onGermanComplete(data){
+       function onComplete(data){
         console.dir(data);
-        $scope.inGerman = data.tuc;
-
+        $scope.Data = data.tuc;
       }
 
-      function onAngloNormanComplete(response){
-        console.dir(response.data);
-        $scope.inAngloNorman = response.data.tuc;
+//functions ended
 
-      }
-
-    $scope.searchDE = function(searchterm){
-      translate.makeHttpRequest(searchterm,"en","de"  )     
-            .then(onGermanComplete,onError);
-
+    $scope.search = function(searchterm,src,dest){
+      translate.makeHttpRequest(searchterm,src,dest)     
+              .then(onComplete,onError);
           }
 
-          $scope.searchXNO = function(searchterm){
-      $http.get("https://glosbe.com/gapi/translate?from=en&dest=xno&format=json&phrase=" + searchterm)
-            .then(onAngloNormanComplete,onError);
 
-          }
+// search functions ended
 
-  $scope.search = function(searchterm){
-  
-    $log.info("Searching for " + searchterm);
-    var promise = $http.get("https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=" +searchterm)
-      promise.then(function(response){
-      	console.dir(response.data);
-      	$scope.object = response.data; 
-        $scope.wordDetailsObject = response.data;
-        $scope.array = $scope.wordDetailsObject.tuc[0].meanings;
-     })
+// scope properties
+  $scope.title = "Awesome Dictionary- The multilingual online dictionary";
+  $scope.src="eng";
+  $scope.dest="hin";
 
-
-
-      $http.get("https://glosbe.com/gapi/translate?from=en&dest=hin&format=json&phrase=" +searchterm)
-            .then(onHindiComplete,onError);
-  
-     
-  
-  
 }
 
-          
-// for english to german
 
-  $scope.title = "Awesome Dictionary"; 
-}
-
- 
-
-
- dictionary.controller("MainController",["$scope","$http","$log","translate",MainController])
- dictionary.factory("translate",["$http",translate])
